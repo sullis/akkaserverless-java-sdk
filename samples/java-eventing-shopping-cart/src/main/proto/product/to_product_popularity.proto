@@ -33,7 +33,10 @@ import "google/protobuf/any.proto";
 // tag::subscribing[]
 // tag::actions[]
 service ToProductPopularityService {
-
+  option (akkaserverless.service) = {
+      type: SERVICE_TYPE_ACTION
+  };
+  
   // end::actions[]
   // <1>
   // tag::actions[]

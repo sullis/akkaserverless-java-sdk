@@ -13,21 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package shopping.cart.domain;
 
-package shopping;
-
+import com.akkaseverless.samples.Main;
 import com.akkaserverless.javasdk.testkit.junit.AkkaServerlessTestkitResource;
 import shopping.cart.api.ShoppingCartApi;
 import shopping.cart.api.ShoppingCartServiceClient;
 import org.junit.ClassRule;
 import org.junit.Test;
-
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static java.util.concurrent.TimeUnit.*;
 
+// Example of an integration test calling our service via the Akka Serverless proxy
+// Run all test classes ending with "IntegrationTest" using `mvn verify -Pfailsafe`
 public class ShoppingCartIntegrationTest {
-
+    
   @ClassRule
   public static final AkkaServerlessTestkitResource testkit =
       new AkkaServerlessTestkitResource(Main.SERVICE);

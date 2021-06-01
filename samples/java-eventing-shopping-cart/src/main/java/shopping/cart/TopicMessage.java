@@ -20,7 +20,9 @@ import com.akkaserverless.javasdk.Jsonable;
 
 import java.beans.BeanProperty;
 
-/** The JSON formatted message to be read from a Pub/Sub topic. */
+/**
+ * The JSON formatted message to be read from a Pub/Sub topic.
+ */
 @Jsonable
 public class TopicMessage {
   String operation;

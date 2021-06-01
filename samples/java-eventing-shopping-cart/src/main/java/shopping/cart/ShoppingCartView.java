@@ -29,7 +29,7 @@ import java.util.Optional;
 @View
 public class ShoppingCartView {
 
-  private static Logger LOG = LoggerFactory.getLogger(ShoppingCartView.class);
+  private static final Logger LOG = LoggerFactory.getLogger(ShoppingCartView.class);
 
   @UpdateHandler
   public ShoppingCartViewModel.CartViewState processAdded(

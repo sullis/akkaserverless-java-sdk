@@ -6,25 +6,35 @@ This example showcases the following eventing features:
 * Reading of events from an Event Sourced Entity and forwarding to a ValueEntity, see ForwardAdded/ForwardRemoved in [to-product-popularity.proto](../../protocols/example/eventing/shoppingcart/to-product-popularity.proto)
 * Reading of events from Google Pub Sub topic, see ProcessAdded/ProcessRemoved in [shopping-cart-analytics.proto](../../protocols/example/eventing/shoppingcart/shopping-cart-analytics.proto)
 
-To run the example locally with the GooglePubSub emulator: (See below for instructions to run against real Pub/Sub)
 
-* Start the pubsub emulator: `gcloud beta emulators pubsub start --project=test --host-port=0.0.0.0:8085`
-* Start the example:
-  * from sbt: `sbt java-eventing-shopping-cart/run`
-  * or mvn
-    ```
-    sbt sdk/publishM2 testkit/publishM2
-    export AKKASERVERLESS_JAVA_SDK_VERSION="0.7.0-beta....-SNAPSHOT"
-    cd samples/java-eventing-shopping-cart
-    mvn compile exec:java
-    ```
-* Start the proxy
-  * with in-memory store: `sbt -Dakkaserverless.proxy.eventing.support=google-pubsub proxy-core/run`
-    * note that this overrides the akkaserverless.proxy.eventing.support defined in `dev-mode.conf`
-  * or with local Spanner emulator:
-    * start the Spanner emulator: `docker run -p 9010:9010 -p 9020:9020 gcr.io/cloud-spanner-emulator/emulator`
-    * `sbt -Dakkaserverless.proxy.eventing.support=google-pubsub proxy-spanner/run`
-      * note that this overrides the akkaserverless.proxy.eventing.support defined in `spanner-dev-mode.conf`
+## Building
+
+To build, at a minimum you need to generate and process sources, particularly when using an IDE.
+
+```shell
+mvn compile
+```
+
+## Running Locally
+
+In order to run your application locally, you must run the Akka Serverless proxy. The included `docker-compose` file contains the configuration required to run the proxy for a locally running application.
+It also contains the configuration to start a local Google Pub/Sub emulator that the Akka Serverless proxy will connect to.
+To start the proxy, run the following command from this directory:
+
+
+```shell
+docker-compose up
+```
+
+> On Linux this requires Docker 20.10 or later (https://github.com/moby/moby/pull/40007),
+> or for a `USER_FUNCTION_HOST` environment variable to be set manually.
+
+```shell
+docker-compose -f docker-compose.yml -f docker-compose.linux.yml up
+```
+
+To start the application locally, the `exec-maven-plugin` is used. Use the following command:
+
 * Send an AddItem command:
   ```
   grpcurl --plaintext -d '{"cart_id": "cart1", "product_id": "akka-tshirt", "name": "Akka t-shirt", "quantity": 3}' localhost:9000  shopping.cart.api.ShoppingCartService/AddItem
@@ -148,17 +158,7 @@ gcloud beta pubsub topics create shopping-cart-json
 
 ## Running integration tests locally
 
-Start the pubsub emulator:
-```
-gcloud beta emulators pubsub start --project=test --host-port=0.0.0.0:8085
-```
-
-Publish the current proxy locally for use via the testkit and TestContainers
-```
-sbt proxy-core/Docker/publishLocal
-```
-
 Run the integration tests
 ```
-sbt java-eventing-shopping-cart/It/test
+mvn -Pit verify
 ```

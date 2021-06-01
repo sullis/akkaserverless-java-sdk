@@ -25,13 +25,17 @@ import com.google.protobuf.Empty;
 import shopping.cart.api.ShoppingCartApi;
 import shopping.cart.api.ShoppingCartTopic;
 
-/** This action illustrates the consumption from a topic (shopping-cart-operations). */
+/**
+ * This action illustrates the consumption from a topic (shopping-cart-operations).
+ */
 @Action
 public class ShoppingCartTopicAction {
 
   private final String forwardTo = "shopping.cart.api.ShoppingCartService";
 
-  /** Akka Serverless expects some CloudEvent metadata to determine the target protobuf type. */
+  /**
+   * Akka Serverless expects some CloudEvent metadata to determine the target protobuf type.
+   */
   @Handler
   public Reply<Empty> protobufFromTopic(
       ShoppingCartTopic.TopicOperation message, ActionContext ctx) {
