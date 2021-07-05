@@ -24,8 +24,16 @@ import customer.domain.CustomerDomain;
 
 import java.util.Optional;
 
+/**
+ * This is where the user will implement his business logic.
+ *
+ * We might generate an initial version, but after that
+ * re-generation should update just the interface and the users'
+ * build tooling should indicate what needs changing.
+ */
 public class CustomerValueEntity extends CustomerValueEntityInterface {
 
+  @Override
   public Effect<CustomerApi.Customer> getCustomer(
       CustomerApi.GetCustomerRequest request,
       CustomerDomain.CustomerState currentState,
@@ -33,6 +41,7 @@ public class CustomerValueEntity extends CustomerValueEntityInterface {
     return effects().reply(convertToApi(currentState));
   }
 
+  @Override
   public Effect<Empty> create(
       CustomerApi.Customer customer,
       CustomerDomain.CustomerState currentState,
@@ -41,6 +50,7 @@ public class CustomerValueEntity extends CustomerValueEntityInterface {
     return effects().updateState(state).thenReply(Empty.getDefaultInstance());
   }
 
+  @Override
   public Effect<Empty> changeName(
       CustomerApi.ChangeNameRequest request,
       CustomerDomain.CustomerState currentState,
