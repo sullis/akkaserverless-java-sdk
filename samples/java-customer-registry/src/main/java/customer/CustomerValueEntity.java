@@ -16,20 +16,16 @@
 
 package customer;
 
-import com.akkaserverless.javasdk.Effect;
 import com.akkaserverless.javasdk.valueentity.CommandContext;
 import com.google.protobuf.Empty;
 import customer.api.CustomerApi;
 import customer.domain.CustomerDomain;
 
-import java.util.Optional;
-
 /**
  * This is where the user will implement his business logic.
  *
- * We might generate an initial version, but after that
- * re-generation should update just the interface and the users'
- * build tooling should indicate what needs changing.
+ * <p>We might generate an initial version, but after that re-generation should update just the
+ * interface and the users' build tooling should indicate what needs changing.
  */
 public class CustomerValueEntity extends CustomerValueEntityInterface {
 
