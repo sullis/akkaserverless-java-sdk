@@ -48,8 +48,7 @@ class EntityServiceSourceGeneratorSuite extends munit.FunSuite {
       |package com.example.service;
       |
       |import com.akkaserverless.javasdk.EntityId;
-      |import com.akkaserverless.javasdk.Reply;
-      |import com.akkaserverless.javasdk.eventsourcedentity.*;
+      |import com.akkaserverless.javasdk.eventsourcedentity.EventSourcedEntityBase;
       |import com.example.service.persistence.EntityOuterClass;
       |import com.external.Empty;
       |
@@ -76,13 +75,13 @@ class EntityServiceSourceGeneratorSuite extends munit.FunSuite {
       |    }
       |    
       |    @Override
-      |    public Reply<Empty> set(ServiceOuterClass.SetValue command, CommandContext ctx) {
-      |        return Reply.failure("The command handler for `Set` is not implemented, yet");
+      |    public Effect<Empty> set(ServiceOuterClass.SetValue command, CommandContext ctx) {
+      |        return effects().failure("The command handler for `Set` is not implemented, yet");
       |    }
       |    
       |    @Override
-      |    public Reply<ServiceOuterClass.MyState> get(ServiceOuterClass.GetValue command, CommandContext ctx) {
-      |        return Reply.failure("The command handler for `Get` is not implemented, yet");
+      |    public Effect<ServiceOuterClass.MyState> get(ServiceOuterClass.GetValue command, CommandContext ctx) {
+      |        return effects().failure("The command handler for `Get` is not implemented, yet");
       |    }
       |    
       |    @Override
@@ -172,9 +171,7 @@ class EntityServiceSourceGeneratorSuite extends munit.FunSuite {
       |
       |package com.example.service;
       |
-      |import com.akkaserverless.javasdk.EntityId;
-      |import com.akkaserverless.javasdk.Reply;
-      |import com.akkaserverless.javasdk.eventsourcedentity.*;
+      |import com.akkaserverless.javasdk.eventsourcedentity.EventSourcedEntityBase;
       |import com.example.service.persistence.EntityOuterClass;
       |import com.external.Empty;
       |
@@ -188,10 +185,10 @@ class EntityServiceSourceGeneratorSuite extends munit.FunSuite {
       |    public abstract void handleSnapshot(EntityOuterClass.MyState snapshot);
       |    
       |    @CommandHandler
-      |    public abstract Reply<Empty> set(ServiceOuterClass.SetValue command, CommandContext ctx);
+      |    public abstract Effect<Empty> set(ServiceOuterClass.SetValue command, CommandContext ctx);
       |    
       |    @CommandHandler
-      |    public abstract Reply<ServiceOuterClass.MyState> get(ServiceOuterClass.GetValue command, CommandContext ctx);
+      |    public abstract Effect<ServiceOuterClass.MyState> get(ServiceOuterClass.GetValue command, CommandContext ctx);
       |    
       |    @EventHandler
       |    public abstract void setEvent(EntityOuterClass.SetEvent event);

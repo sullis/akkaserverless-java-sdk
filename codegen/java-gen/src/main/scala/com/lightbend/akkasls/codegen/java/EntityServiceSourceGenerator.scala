@@ -169,8 +169,7 @@ object EntityServiceSourceGenerator {
       .map(typeImport) ++
     Seq(
       "com.akkaserverless.javasdk.EntityId",
-      "com.akkaserverless.javasdk.Reply",
-      "com.akkaserverless.javasdk.eventsourcedentity.*"
+      "com.akkaserverless.javasdk.eventsourcedentity.EventSourcedEntityBase"
     )).distinct.sorted
 
     pretty(
@@ -237,7 +236,7 @@ object EntityServiceSourceGenerator {
             line <>
             method(
               "public",
-              "Reply" <> angles(qualifiedType(command.outputType)),
+              "Effect" <> angles(qualifiedType(command.outputType)),
               lowerFirst(command.fqn.name),
               List(
                 qualifiedType(command.inputType) <+> "command",
@@ -246,7 +245,7 @@ object EntityServiceSourceGenerator {
               ),
               emptyDoc
             ) {
-              "return Reply.failure" <> parens(notImplementedError("command", command.fqn)) <> semi
+              "return effects().failure" <> parens(notImplementedError("command", command.fqn)) <> semi
             }
           },
           line <> line
@@ -443,9 +442,7 @@ object EntityServiceSourceGenerator {
       .filterNot(_.parent.javaPackage == packageName)
       .map(typeImport) ++
     Seq(
-      "com.akkaserverless.javasdk.EntityId",
-      "com.akkaserverless.javasdk.Reply",
-      "com.akkaserverless.javasdk.eventsourcedentity.*"
+      "com.akkaserverless.javasdk.eventsourcedentity.EventSourcedEntityBase"
     )).distinct.sorted
 
     pretty(
@@ -491,7 +488,7 @@ object EntityServiceSourceGenerator {
             line <>
             abstractMethod(
               "public",
-              "Reply" <> angles(qualifiedType(command.outputType)),
+              "Effect" <> angles(qualifiedType(command.outputType)),
               lowerFirst(command.fqn.name),
               List(
                 qualifiedType(command.inputType) <+> "command",
